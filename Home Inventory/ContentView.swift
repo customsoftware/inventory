@@ -12,18 +12,18 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \FoodItem.name, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<Item>
+    private var foodItems: FetchedResults<FoodItem>
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(items) { item in
+                ForEach(foodItems) { food in
                     NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                        Text(food.name ?? "Not set")
                     } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+                        FoodRowSwiftUIView(foodName: food.name ?? "Not set", qtyOnHand: food.quantity)
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -34,7 +34,7 @@ struct ContentView: View {
                 }
                 ToolbarItem {
                     Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                        Label("Add Food Item", systemImage: "plus")
                     }
                 }
             }
@@ -44,8 +44,8 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newItem = FoodItem(context: viewContext)
+            newItem.id = UUID()
 
             do {
                 try viewContext.save()
@@ -60,7 +60,7 @@ struct ContentView: View {
 
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            offsets.map { foodItems[$0] }.forEach(viewContext.delete)
 
             do {
                 try viewContext.save()
