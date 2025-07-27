@@ -21,7 +21,7 @@ struct ContentView: View {
             List {
                 ForEach(foodItems) { food in
                     NavigationLink {
-                        Text(food.name ?? "Not set")
+                        InventoryDetailView(foodItem: food)
                     } label: {
                         FoodRowSwiftUIView(foodName: food.name ?? "Not set", qtyOnHand: food.quantity)
                     }
