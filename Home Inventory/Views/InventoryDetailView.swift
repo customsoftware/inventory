@@ -87,7 +87,7 @@ struct InventoryDetailView: View {
         do {
             try viewContext.save()
         } catch {
-            print("Saving failed.")
+            print("Saving failed. \(error.localizedDescription)")
         }
     }
 }
