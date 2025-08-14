@@ -9,7 +9,40 @@ import SwiftUI
 
 struct LaunchView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Spacer()
+            HStack(alignment: .top) {
+                Button {
+                    print("Home List")
+                } label: {
+                    Text("Home List")
+                }
+                Spacer()
+                Button {
+                    print("Shopping List")
+                } label: {
+                    Text("Shopping List")
+                }
+            }
+            .padding()
+            
+            HStack(alignment: .top) {
+                Button {
+                    print("Add Items")
+                } label: {
+                    Text("Add Items")
+                }
+                Spacer()
+                Button {
+                    print("Remove Items")
+                } label: {
+                    Text("Remove Items")
+                }
+            }
+            .padding()
+            Spacer()
+        }
+        .padding()
     }
 }
 
